@@ -4,7 +4,6 @@ import com.nnk.springboot.domains.User;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,14 +17,11 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
     @RequestMapping("/user/list")
     public String home(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         return "user/list";
     }
 
@@ -39,7 +35,7 @@ public class UserController {
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             userService.save(user);
-            model.addAttribute("users", userRepository.findAll());
+            model.addAttribute("users", userService.findAllUsers());
             return "redirect:/user/list";
         }
         return "user/add";
@@ -60,14 +56,14 @@ public class UserController {
             return "user/update";
         }
         userService.update(id, user);
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         return "redirect:/user/list";
     }
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         userService.delete(id);
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         return "redirect:/user/list";
     }
 }
