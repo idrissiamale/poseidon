@@ -1,20 +1,29 @@
 package com.nnk.springboot.domains;
 
+import com.nnk.springboot.configuration.ValidPassword;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
+
     @NotBlank(message = "Username is mandatory")
     private String username;
+
+    @ValidPassword
     @NotBlank(message = "Password is mandatory")
     private String password;
+
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
+
     @NotBlank(message = "Role is mandatory")
     private String role;
 

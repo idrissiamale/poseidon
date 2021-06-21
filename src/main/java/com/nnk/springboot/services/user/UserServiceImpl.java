@@ -35,7 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         User userToSave = new User();
+        userToSave.setFullname(user.getFullname());
+        userToSave.setUsername(user.getUsername());
         userToSave.setPassword(passwordEncoder.encode(user.getPassword()));
+        userToSave.setRole(user.getRole());
         return userRepository.save(userToSave);
     }
 
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public User update(Integer id, User user) {
         return userRepository.findById(id).map(userToUpdate -> {
             userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-            return userRepository.save(user);
+            return userRepository.save(userToUpdate);
         }).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
     }
 
