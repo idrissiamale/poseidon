@@ -1,4 +1,4 @@
-package com.nnk.springboot.configuration;
+package com.nnk.springboot.config;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
