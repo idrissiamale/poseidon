@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.security.RolesAllowed;
+
 @Controller
 public class HomeController {
     @RequestMapping("/")
@@ -11,7 +13,9 @@ public class HomeController {
         return "home";
     }
 
+
     @RequestMapping("/admin/home")
+    @RolesAllowed("ADMIN")
     public String adminHome(Model model) {
         return "redirect:/bidList/list";
     }

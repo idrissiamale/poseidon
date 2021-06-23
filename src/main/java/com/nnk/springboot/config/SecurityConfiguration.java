@@ -38,21 +38,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(
-                "/**",
-                "/user/**",
-                "/js/**",
-                "/css/**",
-                "/img/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers( "/user/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(
+                        "/",
+                        "/js/**",
+                        "/css/**",
+                        "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/app/login")
+                .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                .logoutRequestMatcher(new AntPathRequestMatcher("/app/logout"))
+                .logoutSuccessUrl("/app/login?logout")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/app/error");
     }
 }
