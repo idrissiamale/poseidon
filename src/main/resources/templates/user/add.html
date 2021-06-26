@@ -14,6 +14,7 @@
     </div>
 
     <div class="row">
+        <div th:if="${error}" th:text="${error}" class="alert alert-danger"></div>
         <form action="#" th:action="@{/user/validate}" th:object="${user}" method="post" class="form-horizontal"
               style="width: 100%">
             <div class="form-group">

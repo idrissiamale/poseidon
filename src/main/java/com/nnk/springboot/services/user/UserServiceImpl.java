@@ -33,8 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws IllegalArgumentException {
         User userToSave = new User();
+        if (usernameExists(user.getUsername())) {
+            throw new IllegalArgumentException("User already exists with that username");
+        }
         userToSave.setFullname(user.getFullname());
         userToSave.setUsername(user.getUsername());
         userToSave.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -54,5 +57,9 @@ public class UserServiceImpl implements UserService {
     public void delete(Integer id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         userRepository.delete(user);
+    }
+
+    private boolean usernameExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 }

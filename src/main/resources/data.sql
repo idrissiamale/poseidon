@@ -98,5 +98,10 @@ CREATE TABLE users (
   PRIMARY KEY (id)
 );
 
+--INITIALIZATION OF USERS TABLE
+--amale/Password1@
+--johndoe/Password1$
 insert into users(fullname, username, password, role) values("Administrator", "admin", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "ADMIN");
 insert into users(fullname, username, password, role) values("User", "user", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "USER");
+insert into users(fullname, username, password, role) values("Amale Idrissi", "amale", "$2a$10$RfGpw.RRjKk.e36IEi1Uc.9r.7kJp79cSKndathD5YbFmmR34YFZe", "ADMIN");
+insert into users(fullname, username, password, role) values("John Doe", "johndoe", "$2a$10$664dSPocRv2NDo9aUu9.2OIyxlgUbXF6Nu5dmQ6/9UGO73v093mjy", "USER");

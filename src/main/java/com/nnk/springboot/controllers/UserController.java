@@ -31,12 +31,17 @@ public class UserController {
 
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            userService.save(user);
-            model.addAttribute("users", userService.findAllUsers());
-            return "redirect:/user/list";
+        if (result.hasErrors()) {
+            return "user/add";
         }
-        return "user/add";
+        try {
+            userService.save(user);
+        } catch (IllegalArgumentException ie) {
+            model.addAttribute("error", ie.getMessage());
+            return "user/add";
+        }
+        model.addAttribute("users", userService.findAllUsers());
+        return "redirect:/user/list";
     }
 
     @GetMapping("/user/update/{id}")
