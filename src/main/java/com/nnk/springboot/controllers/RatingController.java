@@ -1,9 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Rating;
-import com.nnk.springboot.domains.User;
 import com.nnk.springboot.services.rating.RatingService;
-import com.nnk.springboot.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,8 +47,7 @@ public class RatingController {
     }
 
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-                               BindingResult result, Model model) {
+    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "rating/update";
         }

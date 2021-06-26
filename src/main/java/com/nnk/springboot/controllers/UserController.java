@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/user/add")
-    public String addUser(Model model) {
-        model.addAttribute("user", new User());
+    public String addUser(User user) {
         return "user/add";
     }
 
@@ -50,8 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
-                             BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";
         }

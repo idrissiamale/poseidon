@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.BidList;
-import com.nnk.springboot.domains.Rating;
 import com.nnk.springboot.services.bidList.BidListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +48,7 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bid,
-                            BindingResult result, Model model) {
+    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bid, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "bidList/update";
         }

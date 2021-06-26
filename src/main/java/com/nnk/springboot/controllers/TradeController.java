@@ -47,8 +47,7 @@ public class TradeController {
     }
 
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                              BindingResult result, Model model) {
+    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "trade/update";
         }
