@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class RatingServiceImpl implements RatingService {
     private static final Logger logger = LogManager.getLogger("RatingServiceImpl");
-    @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    public RatingServiceImpl(RatingRepository ratingRepository) {
+        this.ratingRepository = ratingRepository;
+    }
 
     @Override
     public Rating findById(Integer id) throws IllegalArgumentException {

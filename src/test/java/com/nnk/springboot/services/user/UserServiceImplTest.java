@@ -53,7 +53,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Comparing expected role and actual role to check that the new user is correctly saved ")
-    public void shouldGetTheSameFirstNameWhenNewUserIsSaved() {
+    public void shouldGetTheSameRoleWhenNewUserIsCorrectlySaved() {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         User userToSave = userServiceImpl.save(user);
