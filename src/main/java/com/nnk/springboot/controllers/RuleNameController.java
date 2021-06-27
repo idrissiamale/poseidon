@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.RuleName;
 import com.nnk.springboot.services.ruleName.RuleNameService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 public class RuleNameController {
+    private static final Logger logger = LogManager.getLogger("RuleNameController");
     @Autowired
     private RuleNameService ruleNameService;
 
@@ -32,6 +35,7 @@ public class RuleNameController {
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
         if (!result.hasErrors()) {
+            logger.info("RuleName was saved successfully.");
             ruleNameService.save(ruleName);
             model.addAttribute("rules", ruleNameService.findAll());
             return "redirect:/ruleName/list";
@@ -41,6 +45,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        logger.info("RuleName was successfully fetched.");
         RuleName ruleName = ruleNameService.findById(id);
         model.addAttribute("ruleName", ruleName);
         return "ruleName/update";
@@ -51,6 +56,7 @@ public class RuleNameController {
         if (result.hasErrors()) {
             return "ruleName/update";
         }
+        logger.info("RuleName was updated successfully.");
         ruleNameService.update(id, ruleName);
         model.addAttribute("rules", ruleNameService.findAll());
         return "redirect:/ruleName/list";
@@ -58,6 +64,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+        logger.info("RuleName was deleted successfully.");
         ruleNameService.delete(id);
         model.addAttribute("rules", ruleNameService.findAll());
         return "redirect:/ruleName/list";

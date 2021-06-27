@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Trade;
 import com.nnk.springboot.services.trade.TradeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 public class TradeController {
+    private static final Logger logger = LogManager.getLogger("TradeController");
     @Autowired
     private TradeService tradeService;
 
@@ -32,6 +35,7 @@ public class TradeController {
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
         if (!result.hasErrors()) {
+            logger.info("Trade was saved successfully.");
             tradeService.save(trade);
             model.addAttribute("tradeList", tradeService.findAll());
             return "redirect:/trade/list";
@@ -41,6 +45,7 @@ public class TradeController {
 
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        logger.info("Trade was successfully fetched.");
         Trade trade = tradeService.findById(id);
         model.addAttribute("trade", trade);
         return "trade/update";
@@ -51,6 +56,7 @@ public class TradeController {
         if (result.hasErrors()) {
             return "trade/update";
         }
+        logger.info("Trade data were updated successfully.");
         tradeService.update(id, trade);
         model.addAttribute("tradeList", tradeService.findAll());
         return "redirect:/trade/list";
@@ -58,6 +64,7 @@ public class TradeController {
 
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
+        logger.info("Trade data were deleted successfully.");
         tradeService.delete(id);
         model.addAttribute("tradeList", tradeService.findAll());
         return "redirect:/trade/list";

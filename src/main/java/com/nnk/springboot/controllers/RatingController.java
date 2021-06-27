@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Rating;
 import com.nnk.springboot.services.rating.RatingService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 public class RatingController {
+    private static final Logger logger = LogManager.getLogger("RatingController");
     @Autowired
     private RatingService ratingService;
 
@@ -32,6 +35,7 @@ public class RatingController {
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (!result.hasErrors()) {
+            logger.info("Rating was saved successfully.");
             ratingService.save(rating);
             model.addAttribute("ratings", ratingService.findAllRatings());
             return "redirect:/rating/list";
@@ -41,6 +45,7 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        logger.info("Rating was successfully fetched.");
         Rating rating = ratingService.findById(id);
         model.addAttribute("rating", rating);
         return "rating/update";
@@ -51,6 +56,7 @@ public class RatingController {
         if (result.hasErrors()) {
             return "rating/update";
         }
+        logger.info("Rating was updated successfully.");
         ratingService.update(id, rating);
         model.addAttribute("ratings", ratingService.findAllRatings());
         return "redirect:/rating/list";
@@ -58,6 +64,7 @@ public class RatingController {
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
+        logger.info("Rating was deleted successfully.");
         ratingService.delete(id);
         model.addAttribute("ratings", ratingService.findAllRatings());
         return "redirect:/rating/list";

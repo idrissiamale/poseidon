@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.User;
 import com.nnk.springboot.services.user.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 public class UserController {
+    private static final Logger logger = LogManager.getLogger("UserController");
     @Autowired
     private UserService userService;
 
@@ -35,9 +38,11 @@ public class UserController {
             return "user/add";
         }
         try {
+            logger.info("User was saved successfully.");
             userService.save(user);
         } catch (IllegalArgumentException ie) {
             model.addAttribute("error", ie.getMessage());
+            logger.error(" Error occurred. Unable to save user.", ie);
             return "user/add";
         }
         model.addAttribute("users", userService.findAllUsers());
@@ -46,6 +51,7 @@ public class UserController {
 
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        logger.info("User was successfully fetched.");
         User user = userService.findById(id);
         user.setPassword("");
         model.addAttribute("user", user);
@@ -57,6 +63,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "user/update";
         }
+        logger.info("User was updated successfully.");
         userService.update(id, user);
         model.addAttribute("users", userService.findAllUsers());
         return "redirect:/user/list";
@@ -64,6 +71,7 @@ public class UserController {
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
+        logger.info("User was deleted successfully.");
         userService.delete(id);
         model.addAttribute("users", userService.findAllUsers());
         return "redirect:/user/list";
