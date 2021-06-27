@@ -14,11 +14,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger("UserServiceImpl");
-    @Autowired
     private UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public User findById(Integer id) throws IllegalArgumentException {
