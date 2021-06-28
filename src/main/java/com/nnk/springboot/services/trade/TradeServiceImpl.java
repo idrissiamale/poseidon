@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class TradeServiceImpl implements TradeService {
     private static final Logger logger = LogManager.getLogger("TradeServiceImpl");
-    @Autowired
     private TradeRepository tradeRepository;
+
+    @Autowired
+    public TradeServiceImpl(TradeRepository tradeRepository) {
+        this.tradeRepository = tradeRepository;
+    }
 
     @Override
     public Trade findById(Integer id) throws IllegalArgumentException {

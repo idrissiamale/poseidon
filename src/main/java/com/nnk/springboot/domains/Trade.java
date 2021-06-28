@@ -75,4 +75,11 @@ public class Trade implements Serializable {
     private String sourceListId;
 
     private String side;
+
+    public Trade(Integer tradeId, String account, String type, Double buyQuantity) {
+        this.tradeId = tradeId;
+        this.account = account;
+        this.type = type;
+        this.buyQuantity = buyQuantity;
+    }
 }

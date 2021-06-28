@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class RuleNameServiceImpl implements RuleNameService {
     private static final Logger logger = LogManager.getLogger("RuleNameServiceImpl");
-    @Autowired
     private RuleNameRepository ruleNameRepository;
+
+    @Autowired
+    public RuleNameServiceImpl(RuleNameRepository ruleNameRepository) {
+        this.ruleNameRepository = ruleNameRepository;
+    }
 
     @Override
     public RuleName findById(Integer id) throws IllegalArgumentException {

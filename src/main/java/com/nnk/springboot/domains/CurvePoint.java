@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @Table(name = "curvepoint")
 public class CurvePoint implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull(message = "must not be null")
@@ -32,13 +32,20 @@ public class CurvePoint implements Serializable {
     private Timestamp asOfDate;
 
     @NotNull(message = "Term is mandatory")
-    @Digits(message="Term should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message = "Term should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
     private Double term;
 
     @NotNull(message = "Value is mandatory")
-    @Digits(message="Value should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message = "Value should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
     private Double value;
 
     @CreationTimestamp
     private Timestamp creationDate;
+
+    public CurvePoint(Integer id, Integer curveId, Double term, Double value) {
+        this.id = id;
+        this.curveId = curveId;
+        this.term = term;
+        this.value = value;
+    }
 }

@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class CurvePointServiceImpl implements CurvePointService {
     private static final Logger logger = LogManager.getLogger("CurvePointServiceImpl");
-    @Autowired
     private CurvePointRepository curvePointRepository;
+
+    @Autowired
+    public CurvePointServiceImpl(CurvePointRepository curvePointRepository) {
+        this.curvePointRepository = curvePointRepository;
+    }
 
     @Override
     public CurvePoint findById(Integer id) throws IllegalArgumentException {

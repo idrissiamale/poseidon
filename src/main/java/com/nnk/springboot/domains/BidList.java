@@ -78,4 +78,11 @@ public class BidList implements Serializable {
     private String sourceListId;
 
     private String side;
+
+    public BidList(Integer bidListId, String account, String type, Double bidQuantity) {
+        this.bidListId = bidListId;
+        this.account = account;
+        this.type = type;
+        this.bidQuantity = bidQuantity;
+    }
 }

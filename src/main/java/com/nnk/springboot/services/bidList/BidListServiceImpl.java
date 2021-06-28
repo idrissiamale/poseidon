@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class BidListServiceImpl implements BidListService {
     private static final Logger logger = LogManager.getLogger("BidListServiceImpl");
-    @Autowired
     private BidListRepository bidListRepository;
+
+    @Autowired
+    public BidListServiceImpl(BidListRepository bidListRepository) {
+        this.bidListRepository = bidListRepository;
+    }
 
     @Override
     public BidList findById(Integer id) throws IllegalArgumentException {
