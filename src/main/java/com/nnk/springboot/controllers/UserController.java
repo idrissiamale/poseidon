@@ -14,16 +14,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
     private static final Logger logger = LogManager.getLogger("UserController");
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping("/user/list")
     public String home(Model model) {
-        model.addAttribute("users", userService.findAllUsers());
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
         return "user/list";
     }
 

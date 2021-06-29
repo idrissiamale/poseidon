@@ -18,8 +18,12 @@ import javax.validation.Valid;
 @Controller
 public class RatingController {
     private static final Logger logger = LogManager.getLogger("RatingController");
-    @Autowired
     private RatingService ratingService;
+
+    @Autowired
+    public RatingController(RatingService ratingService) {
+        this.ratingService = ratingService;
+    }
 
     @RequestMapping("/rating/list")
     public String home(Model model) {
