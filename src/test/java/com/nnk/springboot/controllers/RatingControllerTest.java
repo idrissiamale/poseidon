@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Rating;
-import com.nnk.springboot.domains.User;
 import com.nnk.springboot.services.rating.RatingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -18,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
@@ -29,7 +30,6 @@ public class RatingControllerTest {
     private MockMvc mockMvc;
     private Rating rating;
     private Rating ratingUpdated;
-    private Rating rating2;
     private List<Rating> ratings;
 
     @Mock
@@ -40,7 +40,7 @@ public class RatingControllerTest {
         RatingController ratingController = new RatingController(ratingService);
         rating = new Rating(1, "Moodys Rating", "Sand PRating", "Fitch Rating", 10);
         ratingUpdated = new Rating(1, "Moodys Rating", "Sand PRating", "Fitch Rating", 20);
-        rating2 = new Rating(2, "Aaa", "AAA", "AAA", 16);
+        Rating rating2 = new Rating(2, "Aaa", "AAA", "AAA", 16);
         ratings = new ArrayList<>();
         ratings.add(rating);
         ratings.add(rating2);
@@ -68,6 +68,7 @@ public class RatingControllerTest {
                 )))
                 .andExpect(model().attribute("ratings", hasItem(
                         allOf(
+                                hasProperty("id", is(2)),
                                 hasProperty("moodysRating", is("Aaa")),
                                 hasProperty("sandPRating", is("AAA")),
                                 hasProperty("fitchRating", is("AAA")),
@@ -78,4 +79,129 @@ public class RatingControllerTest {
         verify(ratingService).findAllRatings();
     }
 
+    @Test
+    @DisplayName("Checking that the contact page is returned when the logged in user makes a GET request to the /user/add URL")
+    public void shouldReturnUserAddPageView() throws Exception {
+        this.mockMvc.perform(get("/rating/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/add"));
+    }
+
+    @Test
+    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
+    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlySaved() throws Exception {
+        when(ratingService.save(any(Rating.class))).thenReturn(rating);
+
+        this.mockMvc.perform(post("/rating/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("moodysRating", "Moodys Rating")
+                .param("sandPRating", "Sand PRating")
+                .param("fitchRating", "Fitch Rating")
+                .param("orderNumber", "10")
+                .sessionAttr("rating", rating)
+        )
+                .andExpect(status().isFound())
+                .andExpect(view().name("redirect:/rating/list"))
+                .andExpect(redirectedUrl("/rating/list"))
+                .andExpect(model().hasNoErrors())
+                .andDo(print());
+
+        verify(ratingService).save(any(Rating.class));
+        assertEquals("Moodys Rating", rating.getMoodysRating());
+    }
+
+    @Test
+    @DisplayName("Checking that the bankAccount form is returned when there are errors on iban or/and name")
+    public void shouldReturnBankAccountFormViewWhenErrorsOnIbanAndNameFields() throws Exception {
+        String moodysRating = " ";
+        Integer orderNumber = 0;
+
+        this.mockMvc.perform(post("/rating/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("moodysRating", moodysRating)
+                .param("sandPRating", "Sand PRating")
+                .param("fitchRating", "Fitch Rating")
+                .param("orderNumber", String.valueOf(orderNumber))
+                .sessionAttr("rating", rating)
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/add"))
+                .andExpect(model().attributeHasFieldErrors("rating", "moodysRating"))
+                .andExpect(model().attributeHasFieldErrors("rating", "orderNumber"))
+                .andExpect(model().attribute("rating", hasProperty("moodysRating", is(moodysRating))))
+                .andExpect(model().attribute("rating", hasProperty("orderNumber", is(orderNumber))))
+                .andDo(print());
+
+        verifyZeroInteractions(ratingService);
+    }
+
+    @Test
+    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
+    public void shouldReturnUpdateProfileFormView() throws Exception {
+        when(ratingService.findById(1)).thenReturn(rating);
+
+        this.mockMvc.perform(get("/rating/update/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/update"))
+                .andExpect(model().attribute("rating", rating))
+                .andDo(print());
+
+        verify(ratingService).findById(1);
+    }
+
+    @Test
+    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
+    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlyUpdated() throws Exception {
+        Integer orderNumber = 20;
+        when(ratingService.update(anyInt(), any(Rating.class))).thenReturn(ratingUpdated);
+
+        this.mockMvc.perform(post("/rating/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("moodysRating", "Moodys Rating")
+                .param("sandPRating", "Sand PRating")
+                .param("fitchRating", "Fitch Rating")
+                .param("orderNumber", String.valueOf(ratingUpdated.getOrderNumber()))
+                .sessionAttr("rating", ratingUpdated)
+        )
+                .andExpect(status().isFound())
+                .andExpect(view().name("redirect:/rating/list"))
+                .andExpect(redirectedUrl("/rating/list"))
+                .andExpect(model().hasNoErrors())
+                .andDo(print());
+
+        verify(ratingService).update(anyInt(), any(Rating.class));
+        assertEquals(orderNumber, ratingUpdated.getOrderNumber());
+    }
+
+    @Test
+    @DisplayName("Checking that the update_profile form is returned with error message when there are errors on first name, last name and/or user's email")
+    public void shouldReturnUpdateProfileFormViewWhenErrorsOnFirstNameLastNameAndEmailFields() throws Exception {
+        Integer orderNumber = null;
+
+        this.mockMvc.perform(post("/rating/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("moodysRating", "Moodys Rating")
+                .param("sandPRating", "Sand PRating")
+                .param("fitchRating", "Fitch Rating")
+                .param("orderNumber", String.valueOf(orderNumber))
+                .sessionAttr("rating", ratingUpdated)
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("rating/update"))
+                .andExpect(model().attributeHasFieldErrors("rating", "orderNumber"))
+                .andExpect(model().attribute("rating", hasProperty("orderNumber", is(orderNumber))))
+                .andDo(print());
+
+        verifyZeroInteractions(ratingService);
+    }
+
+    @Test
+    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
+    public void shouldReturnDeleteProfileFormView() throws Exception {
+        doNothing().when(ratingService).delete(1);
+
+        this.mockMvc.perform(get("/rating/delete/{id}", 1))
+                .andExpect(status().isFound())
+                .andExpect(view().name("redirect:/rating/list"))
+                .andExpect(model().attribute("rating", nullValue()))
+                .andDo(print());
+
+        verify(ratingService).delete(1);
+    }
 }

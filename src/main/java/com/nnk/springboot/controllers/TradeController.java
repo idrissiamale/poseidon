@@ -1,6 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Trade;
+import com.nnk.springboot.services.bidList.BidListService;
 import com.nnk.springboot.services.trade.TradeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,8 +19,12 @@ import javax.validation.Valid;
 @Controller
 public class TradeController {
     private static final Logger logger = LogManager.getLogger("TradeController");
-    @Autowired
     private TradeService tradeService;
+
+    @Autowired
+    public TradeController (TradeService tradeService) {
+        this.tradeService = tradeService;
+    }
 
     @RequestMapping("/trade/list")
     public String home(Model model) {

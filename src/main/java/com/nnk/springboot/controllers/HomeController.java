@@ -9,12 +9,9 @@ public class HomeController {
     public String home() {
         return "home";
     }
-
-
+    
     @RequestMapping("/admin/home")
     public String adminHome() {
         return "redirect:/bidList/list";
     }
-
-
 }

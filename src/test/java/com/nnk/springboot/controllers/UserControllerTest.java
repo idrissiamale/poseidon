@@ -86,7 +86,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Checking that the contact page is returned when the logged in user makes a GET request to the /user/add URL")
     public void shouldReturnUserAddPageView() throws Exception {
-        mockMvc.perform(get("/user/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/user/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/add"));
     }

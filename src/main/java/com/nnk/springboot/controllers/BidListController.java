@@ -19,8 +19,12 @@ import javax.validation.Valid;
 @Controller
 public class BidListController {
     private static final Logger logger = LogManager.getLogger("BidListController");
-    @Autowired
     private BidListService bidListService;
+
+    @Autowired
+    public BidListController(BidListService bidListService) {
+        this.bidListService = bidListService;
+    }
 
     @RequestMapping("/bidList/list")
     public String home(Model model) {
