@@ -1,8 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.BidList;
 import com.nnk.springboot.domains.Trade;
-import com.nnk.springboot.services.bidList.BidListService;
 import com.nnk.springboot.services.trade.TradeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
