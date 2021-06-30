@@ -18,8 +18,12 @@ import javax.validation.Valid;
 @Controller
 public class RuleNameController {
     private static final Logger logger = LogManager.getLogger("RuleNameController");
-    @Autowired
     private RuleNameService ruleNameService;
+
+    @Autowired
+    public RuleNameController(RuleNameService ruleNameService) {
+        this.ruleNameService = ruleNameService;
+    }
 
     @RequestMapping("/ruleName/list")
     public String home(Model model) {

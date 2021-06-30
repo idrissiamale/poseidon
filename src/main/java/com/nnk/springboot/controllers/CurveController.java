@@ -18,8 +18,12 @@ import javax.validation.Valid;
 @Controller
 public class CurveController {
     private static final Logger logger = LogManager.getLogger("CurveController");
-    @Autowired
     private CurvePointService curvePointService;
+
+    @Autowired
+    public CurveController(CurvePointService curvePointService) {
+        this.curvePointService = curvePointService;
+    }
 
     @RequestMapping("/curvePoint/list")
     public String home(Model model) {
