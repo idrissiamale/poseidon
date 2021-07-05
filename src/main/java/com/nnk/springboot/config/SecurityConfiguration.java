@@ -39,15 +39,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/bidList/**").hasAuthority("ADMIN")
-                .antMatchers("/curvePoint/**").hasAuthority("ADMIN")
-                .antMatchers("/rating/**").hasAuthority("ADMIN")
-                .antMatchers("/trade/**").hasAuthority("ADMIN")
-                .antMatchers("/ruleName/**").hasAuthority("ADMIN")
-                .antMatchers( "/user/add").hasAuthority("ADMIN")
-                .antMatchers( "/user/update/**").hasAuthority("ADMIN")
-                .antMatchers( "/user/delete/**").hasAuthority("ADMIN")
+                .antMatchers("/admin/**",
+                        "/bidList/**",
+                        "/curvePoint/**",
+                        "/rating/**",
+                        "/trade/**",
+                        "/ruleName/**",
+                        "/user/add",
+                        "/user/update/**",
+                        "/user/delete/**" ).hasAuthority("ADMIN")
                 .antMatchers( "/user/list").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers(
                         "/",
