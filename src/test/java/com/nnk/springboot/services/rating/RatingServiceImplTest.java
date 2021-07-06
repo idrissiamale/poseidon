@@ -129,4 +129,13 @@ public class RatingServiceImplTest {
 
         verify(ratingRepository).delete(rating);
     }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the rating we want to delete is not found")
+    public void shouldThrowExceptionWhenRatingToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(ratingRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> ratingServiceImpl.delete(7));
+        verify(ratingRepository).findById(7);
+    }
 }

@@ -52,14 +52,14 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @DisplayName("Comparing expected role and actual role to check that the new user is correctly saved ")
+    @DisplayName("Comparing expected and actual username to check that the new user is correctly saved ")
     public void shouldGetTheSameRoleWhenNewUserIsCorrectlySaved() {
         when(userRepository.save(any(User.class))).thenReturn(user);
 
         User userToSave = userServiceImpl.save(user);
 
         verify(userRepository).save(any(User.class));
-        assertEquals("ADMIN", userToSave.getRole());
+        assertEquals(user.getUsername(), userToSave.getUsername());
     }
 
     @Test
@@ -95,6 +95,15 @@ public class UserServiceImplTest {
 
         verify(userRepository).save(any(User.class));
         assertEquals("amale33", userUpdated.getUsername());
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the user we want to update is not found")
+    public void shouldThrowExceptionWhenUserToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(userRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> userServiceImpl.update(7, user));
+        verify(userRepository).findById(7);
     }
 
     @Test
@@ -162,5 +171,14 @@ public class UserServiceImplTest {
         userServiceImpl.delete(user.getId());
 
         verify(userRepository).delete(user);
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the user we want to delete is not found")
+    public void shouldThrowExceptionWhenUserToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(userRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> userServiceImpl.delete(7));
+        verify(userRepository).findById(7);
     }
 }

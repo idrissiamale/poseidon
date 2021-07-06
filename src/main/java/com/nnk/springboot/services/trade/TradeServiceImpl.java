@@ -50,7 +50,7 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public void delete(Integer id) {
-        Trade trade = findById(id);
+        Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
         logger.info("Trade data were deleted successfully.");
         tradeRepository.delete(trade);
     }

@@ -85,6 +85,15 @@ public class RuleNameServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the rule we want to update is not found")
+    public void shouldThrowExceptionWhenRuleToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(ruleNameRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> ruleNameServiceImpl.update(7, ruleName));
+        verify(ruleNameRepository).findById(7);
+    }
+
+    @Test
     @DisplayName("Checking that the rule is correctly fetched by its id")
     public void shouldFindRuleByItsId() {
         when(ruleNameRepository.findById(1)).thenReturn(Optional.ofNullable(ruleName));
@@ -126,5 +135,14 @@ public class RuleNameServiceImplTest {
         ruleNameServiceImpl.delete(ruleName.getId());
 
         verify(ruleNameRepository).delete(ruleName);
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the rule we want to delete is not found")
+    public void shouldThrowExceptionWhenRuleToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(ruleNameRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> ruleNameServiceImpl.delete(7));
+        verify(ruleNameRepository).findById(7);
     }
 }

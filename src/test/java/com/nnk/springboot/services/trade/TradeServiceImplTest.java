@@ -85,6 +85,15 @@ public class TradeServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the trade we want to update is not found")
+    public void shouldThrowExceptionWhenTradeToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(tradeRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> tradeServiceImpl.update(7, trade));
+        verify(tradeRepository).findById(7);
+    }
+
+    @Test
     @DisplayName("Checking that the trade is correctly fetched by its id")
     public void shouldFindTradeByItsId() {
         when(tradeRepository.findById(1)).thenReturn(Optional.ofNullable(trade));
@@ -126,5 +135,14 @@ public class TradeServiceImplTest {
         tradeServiceImpl.delete(trade.getTradeId());
 
         verify(tradeRepository).delete(trade);
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the trade we want to delete is not found")
+    public void shouldThrowExceptionWhenTradeToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(tradeRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> tradeServiceImpl.delete(7));
+        verify(tradeRepository).findById(7);
     }
 }

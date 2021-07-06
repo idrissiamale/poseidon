@@ -53,7 +53,7 @@ public class RuleNameServiceImpl implements RuleNameService {
 
     @Override
     public void delete(Integer id) {
-        RuleName ruleName = findById(id);
+        RuleName ruleName = ruleNameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
         logger.info("RuleName was deleted successfully.");
         ruleNameRepository.delete(ruleName);
     }

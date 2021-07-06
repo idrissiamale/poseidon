@@ -51,7 +51,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public void delete(Integer id) {
-        Rating rating = findById(id);
+        Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         logger.info("Rating was deleted successfully.");
         ratingRepository.delete(rating);
     }
