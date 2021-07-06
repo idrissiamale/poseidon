@@ -87,6 +87,15 @@ public class RatingServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the rating we want to update is not found")
+    public void shouldThrowExceptionWhenRatingToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(ratingRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> ratingServiceImpl.update(7, rating));
+        verify(ratingRepository).findById(7);
+    }
+
+    @Test
     @DisplayName("Checking that the rating is correctly fetched by its id")
     public void shouldFindRatingByItsId() {
         when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));

@@ -50,7 +50,7 @@ public class CurvePointServiceImpl implements CurvePointService {
 
     @Override
     public void delete(Integer id) {
-        CurvePoint curvePoint = findById(id);
+        CurvePoint curvePoint = curvePointRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
         logger.info("CurvePoint was deleted successfully.");
         curvePointRepository.delete(curvePoint);
     }

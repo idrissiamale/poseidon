@@ -50,7 +50,7 @@ public class BidListServiceImpl implements BidListService {
 
     @Override
     public void delete(Integer id) {
-        BidList bid = findById(id);
+        BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bidList Id:" + id));
         logger.info("BidList was deleted successfully.");
         bidListRepository.delete(bid);
     }

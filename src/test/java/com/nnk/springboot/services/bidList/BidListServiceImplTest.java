@@ -85,6 +85,15 @@ public class BidListServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the bidList we want to update is not found")
+    public void shouldThrowExceptionWhenBidListToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(bidListRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> bidListServiceImpl.update(7, bidList));
+        verify(bidListRepository).findById(7);
+    }
+
+    @Test
     @DisplayName("Checking that the bidList is correctly fetched by its id")
     public void shouldFindBidListByItsId() {
         when(bidListRepository.findById(1)).thenReturn(Optional.ofNullable(bidList));
@@ -126,5 +135,14 @@ public class BidListServiceImplTest {
         bidListServiceImpl.delete(bidList.getBidListId());
 
         verify(bidListRepository).delete(bidList);
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when bidList we want to delete is not found")
+    public void shouldThrowExceptionWhenBidListToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(bidListRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> bidListServiceImpl.delete(7));
+        verify(bidListRepository).findById(7);
     }
 }

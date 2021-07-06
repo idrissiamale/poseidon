@@ -85,6 +85,15 @@ public class CurvePointServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the curve point we want to update is not found")
+    public void shouldThrowExceptionWhenCurvePointToUpdateIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(curvePointRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> curvePointServiceImpl.update(7, curvePoint));
+        verify(curvePointRepository).findById(7);
+    }
+
+    @Test
     @DisplayName("Checking that the curve point is correctly fetched by its id")
     public void shouldFindCurvePointByItsId() {
         when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
@@ -126,5 +135,14 @@ public class CurvePointServiceImplTest {
         curvePointServiceImpl.delete(curvePoint.getId());
 
         verify(curvePointRepository).delete(curvePoint);
+    }
+
+    @Test
+    @DisplayName("Checking that IllegalArgumentException is thrown when the curve point we want to delete is not found")
+    public void shouldThrowExceptionWhenCurvePointToDeleteIsNotFound() {
+        doThrow(new IllegalArgumentException()).when(curvePointRepository).findById(7);
+
+        assertThrows(IllegalArgumentException.class, () -> curvePointServiceImpl.delete(7));
+        verify(curvePointRepository).findById(7);
     }
 }
