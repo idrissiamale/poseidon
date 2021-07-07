@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
+/**
+ * Controller class which handles CRUD operations made by the user on the user management page.
+ *
+ * @see com.nnk.springboot.services.user.UserService
+ */
 @Controller
 public class UserController {
     private static final Logger logger = LogManager.getLogger("UserController");
@@ -26,17 +30,37 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * It displays the User management page when a GET request to the following URL is made.
+     *
+     * @param model - it permits to add "users" to the model and to display all the users registered in Poseidon.
+     * @return the user/list page.
+     */
     @RequestMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userService.findAllUsers());
         return "user/list";
     }
 
+    /**
+     * It displays the user/add form when a GET request to the following URL is made.
+     *
+     * @param user - User entity. Must not be null.
+     * @return the user/add page.
+     */
     @GetMapping("/user/add")
     public String addUser(User user) {
         return "user/add";
     }
 
+    /**
+     * A method which saves user's registration data into database after the submission is completed and without errors.
+     *
+     * @param user   - User entity. Must not be null.
+     * @param result - permits to handle bind errors and to display it to the user when there are errors on the form fields.
+     * @param model  - it permits to add "error" to the model and to display IllegalArgumentException's error message if the exception is thrown.
+     * @return it redirects the user to the user/list page if the submission is completed and without errors. Otherwise the user/add form is returned.
+     */
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -54,6 +78,13 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    /**
+     * It displays the update form when a GET request to the following URL is made.
+     *
+     * @param id    - it refers to user's id which is used as the path variable.
+     * @param model - it permits to define User entity as part of a Model and to display its data into form with the addAttribute method.
+     * @return the user/update page.
+     */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("User was successfully fetched.");
@@ -63,6 +94,15 @@ public class UserController {
         return "user/update";
     }
 
+    /**
+     * A method which updates user's registration data after the submission is completed and without errors.
+     *
+     * @param id-    it refers to user's id which is used as the path variable.
+     * @param user   - User entity. Must not be null.
+     * @param result - permits to handle bind errors and to display it to the user when there are errors on the form fields.
+     * @param model  - it permits to add "users" to the model and to display all the users registered in Poseidon when the user is redirected to user/list page.
+     * @return it redirects the user to the user/list page if the submission is completed and without errors. Otherwise the user/update form is returned.
+     */
     @PostMapping("/user/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -74,6 +114,14 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    /**
+     * A method which deletes a user when a GET request to the following URL is made.
+     *
+     * @param id-   it refers to user's id which is used as the path variable.
+     * @param model - it permits to add "users" to the model and to display all the users registered in Poseidon
+     *              when the user is redirected to user/list page after the delete operation.
+     * @return it redirects the user to the user/list page after the delete operation.
+     */
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         logger.info("User was deleted successfully.");
