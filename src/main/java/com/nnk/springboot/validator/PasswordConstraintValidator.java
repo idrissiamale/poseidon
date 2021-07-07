@@ -1,6 +1,5 @@
 package com.nnk.springboot.validator;
 
-import com.nnk.springboot.validator.ValidPassword;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
@@ -8,6 +7,11 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * An implementation of ConstraintValidator interface which permits to create our custom password constraint validator using custom password validation rules.
+ *
+ * @see ConstraintValidator
+ */
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
     @Override
