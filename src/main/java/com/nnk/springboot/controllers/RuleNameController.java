@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * Controller class which handles CRUD operations made by the user on the rule pages (ruleName/add, ruleName/list and ruleName/update).
+ *
+ * @see com.nnk.springboot.services.ruleName.RuleNameService
+ */
 @Controller
 public class RuleNameController {
     private static final Logger logger = LogManager.getLogger("RuleNameController");
@@ -25,17 +30,38 @@ public class RuleNameController {
         this.ruleNameService = ruleNameService;
     }
 
-    @RequestMapping("/ruleName/list")
+    /**
+     * It displays the ruleName/list page when a GET request to the following URL is made.
+     *
+     * @param model - it permits to add "rules" to the model and to display all the rules registered in Poseidon.
+     * @return the ruleName/list page.
+     */
+    @GetMapping("/ruleName/list")
     public String home(Model model) {
         model.addAttribute("rules", ruleNameService.findAll());
         return "ruleName/list";
     }
 
+    /**
+     * It displays the ruleName/add form when a GET request to the following URL is made.
+     *
+     * @param ruleName - RuleName entity. Must not be null.
+     * @return the ruleName/add page.
+     */
     @GetMapping("/ruleName/add")
     public String addRuleForm(RuleName ruleName) {
         return "ruleName/add";
     }
 
+    /**
+     * A method which saves ruleName's data into database after the submission is completed and without errors.
+     *
+     * @param ruleName - RuleName entity. Must not be null.
+     * @param result   - permits to handle bind errors and to display it to the user when there are errors on the form fields.
+     * @param model    - it permits to add "rules" to the model and to display all the rules registered in Poseidon
+     *                 when the user is redirected to ruleName/list page.
+     * @return it redirects the user to the ruleName/list page if the submission is completed and without errors. Otherwise the ruleName/add form is returned.
+     */
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
         if (!result.hasErrors()) {
@@ -47,6 +73,13 @@ public class RuleNameController {
         return "ruleName/add";
     }
 
+    /**
+     * It displays the update form when a GET request to the following URL is made.
+     *
+     * @param id    - it refers to ruleName's id which is used as the path variable.
+     * @param model - it permits to define RuleName entity as part of a Model and to display its data into form with the addAttribute method.
+     * @return the ruleName/update page.
+     */
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("RuleName was successfully fetched.");
@@ -55,6 +88,15 @@ public class RuleNameController {
         return "ruleName/update";
     }
 
+    /**
+     * A method which updates ruleName's data after the submission is completed and without errors.
+     *
+     * @param id       - it refers to ruleName's id which is used as the path variable.
+     * @param ruleName - RuleName entity. Must not be null.
+     * @param result   - permits to handle bind errors and to display it to the user when there are errors on the form fields.
+     * @param model    - it permits to add "rules" to the model and to display all the rules registered in Poseidon when the user is redirected to ruleName/list page.
+     * @return it redirects the user to the ruleName/list page if the submission is completed and without errors. Otherwise the ruleName/update form is returned.
+     */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -66,6 +108,14 @@ public class RuleNameController {
         return "redirect:/ruleName/list";
     }
 
+    /**
+     * A method which deletes a rule when a GET request to the following URL is made.
+     *
+     * @param id    - it refers to ruleName's id which is used as the path variable.
+     * @param model - it permits to add "rules" to the model and to display all the rules registered in Poseidon
+     *              when the user is redirected to ruleName/list page after the delete operation.
+     * @return it redirects the user to the ruleName/list page after the delete operation.
+     */
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
         logger.info("RuleName was deleted successfully.");

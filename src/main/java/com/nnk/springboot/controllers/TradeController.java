@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.Trade;
-import com.nnk.springboot.services.bidList.BidListService;
 import com.nnk.springboot.services.trade.TradeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +36,7 @@ public class TradeController {
      * @param model - it permits to add "tradeList" to the model and to display all the trades registered in Poseidon.
      * @return the trade/list page.
      */
-    @RequestMapping("/trade/list")
+    @GetMapping("/trade/list")
     public String home(Model model) {
         model.addAttribute("tradeList", tradeService.findAll());
         return "trade/list";
@@ -92,8 +91,8 @@ public class TradeController {
     /**
      * A method which updates trade's data after the submission is completed and without errors.
      *
-     * @param id-    it refers to trade's id which is used as the path variable.
-     * @param trade   - Trade entity. Must not be null.
+     * @param id     - it refers to trade's id which is used as the path variable.
+     * @param trade  - Trade entity. Must not be null.
      * @param result - permits to handle bind errors and to display it to the user when there are errors on the form fields.
      * @param model  - it permits to add "tradeList" to the model and to display all the trades registered in Poseidon when the user is redirected to trade/list page.
      * @return it redirects the user to the trade/list page if the submission is completed and without errors. Otherwise the trade/update form is returned.
@@ -110,9 +109,9 @@ public class TradeController {
     }
 
     /**
-     * A method which deletes a user when a GET request to the following URL is made.
+     * A method which deletes a trade when a GET request to the following URL is made.
      *
-     * @param id-   it refers to trade's id which is used as the path variable.
+     * @param id    - it refers to trade's id which is used as the path variable.
      * @param model - it permits to add "tradeList" to the model and to display all the trades registered in Poseidon
      *              when the user is redirected to trade/list page after the delete operation.
      * @return it redirects the user to the trade/list page after the delete operation.

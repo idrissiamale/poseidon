@@ -36,7 +36,7 @@ public class UserController {
      * @param model - it permits to add "users" to the model and to display all the users registered in Poseidon.
      * @return the user/list page.
      */
-    @RequestMapping("/user/list")
+    @GetMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userService.findAllUsers());
         return "user/list";
