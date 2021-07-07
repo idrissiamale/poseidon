@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * An implementation of UserDetails interface which provides core user information.
+ */
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 6529685098267757690L;
 

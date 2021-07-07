@@ -15,6 +15,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * BidList entity, a model class that is mapped to our database and which gathers the bid's data.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -10,6 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * Rating entity, a model class that is mapped to our database and which gathers ruleName's data.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

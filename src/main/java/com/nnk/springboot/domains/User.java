@@ -10,6 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
+/**
+ * User entity, a model class that is mapped to our database and which represents the data of Poseidon's user.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

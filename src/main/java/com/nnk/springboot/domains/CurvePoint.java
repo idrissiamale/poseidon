@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * Curve point entity, a model class that is mapped to our database and which gathers the curve point's data.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

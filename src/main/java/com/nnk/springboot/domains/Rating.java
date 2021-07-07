@@ -11,6 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+/**
+ * Rating entity, a model class that is mapped to our database and which represents finance's ratings.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

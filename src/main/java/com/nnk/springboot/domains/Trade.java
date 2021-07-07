@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * Trade entity, a model class that is mapped to our database and which gathers the trade's data.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
