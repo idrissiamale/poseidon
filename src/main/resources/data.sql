@@ -57,7 +57,7 @@ CREATE TABLE trade (
 
 CREATE TABLE curvepoint (
   id tinyint(4) NOT NULL AUTO_INCREMENT,
-  CurveId tinyint,
+  curveId tinyint,
   asOfDate TIMESTAMP,
   term DOUBLE ,
   value DOUBLE ,
@@ -105,3 +105,18 @@ insert into users(fullname, username, password, role) values("Administrator", "a
 insert into users(fullname, username, password, role) values("User", "user", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "USER");
 insert into users(fullname, username, password, role) values("Amale Idrissi", "amale", "$2a$10$RfGpw.RRjKk.e36IEi1Uc.9r.7kJp79cSKndathD5YbFmmR34YFZe", "ADMIN");
 insert into users(fullname, username, password, role) values("John Doe", "johndoe", "$2a$10$664dSPocRv2NDo9aUu9.2OIyxlgUbXF6Nu5dmQ6/9UGO73v093mjy", "USER");
+
+--INITIALIZATION OF RULENAME TABLE
+insert into ruleName(name, description, json, template, sqlStr, sqlPart) values("Rule Name", "Description", "Json", "Template", "SQL", "SQL Part");
+
+--INITIALIZATION OF RATING TABLE
+insert into rating(moodysRating, sandPRating, fitchRating, orderNumber) values("Moodys Rating", "Sand PRating", "Fitch Rating", 10);
+
+--INITIALIZATION OF CURVEPOINT TABLE
+insert into curvepoint(curveId, asOfDate, term, value, creationDate) values(10, "2021-05-03 14:01:22", 15.7, 25.0, "2020-05-07 22:01:22");
+
+--INITIALIZATION OF TRADE TABLE
+insert into trade(account, type, buyQuantity) values("account name", "type name", 55.75);
+
+--INITIALIZATION OF BIDLIST TABLE
+insert into bidList(account, type, bidQuantity) values("account name", "type name", 55.75);
