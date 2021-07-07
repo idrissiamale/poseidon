@@ -52,8 +52,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the credit page is returned when the logged in user makes a GET request to the /credits URL")
-    public void shouldReturnCreditView() throws Exception {
+    @DisplayName("Checking that the user management page is returned when the user makes a GET request to the /user/list URL")
+    public void shouldReturnUserListView() throws Exception {
         when(userService.findAllUsers()).thenReturn(users);
 
         this.mockMvc.perform(get("/user/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -84,7 +84,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the contact page is returned when the logged in user makes a GET request to the /user/add URL")
+    @DisplayName("Checking that the user/add page is returned when the user makes a GET request to the /user/add URL")
     public void shouldReturnUserAddPageView() throws Exception {
         this.mockMvc.perform(get("/user/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
@@ -92,8 +92,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlySaved() throws Exception {
+    @DisplayName("Checking that the user is redirected to the user management page when its data are correctly saved")
+    public void shouldReturnUserManagementPageViewWhenUserDataAreCorrectlySaved() throws Exception {
         when(userService.save(any(User.class))).thenReturn(user);
 
         this.mockMvc.perform(post("/user/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -114,8 +114,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the bankAccount form is returned when there are errors on iban or/and name")
-    public void shouldReturnBankAccountFormViewWhenErrorsOnIbanAndNameFields() throws Exception {
+    @DisplayName("Checking that the 'Add New User' form (user/add page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnAddNewUserFormViewWhenErrorsOnPasswordAndUsernameFields() throws Exception {
         String password = "pass";
         String username = " ";
 
@@ -138,8 +138,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
-    public void shouldReturnUpdateProfileFormView() throws Exception {
+    @DisplayName("Checking that the 'Update User' form (user/update page) is returned when the user makes a GET request to the /user/update/{id} URL")
+    public void shouldReturnUpdateUserFormView() throws Exception {
         when(userService.findById(1)).thenReturn(user);
 
         this.mockMvc.perform(get("/user/update/{id}", 1))
@@ -152,8 +152,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlyUpdated() throws Exception {
+    @DisplayName("Checking that the user is redirected to the user management page when its data are correctly updated")
+    public void shouldReturnUserManagementPageViewWhenUserDataAreCorrectlyUpdated() throws Exception {
         when(userService.update(anyInt(), any(User.class))).thenReturn(userUpdated);
 
         this.mockMvc.perform(post("/user/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -174,8 +174,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned with error message when there are errors on first name, last name and/or user's email")
-    public void shouldReturnUpdateProfileFormViewWhenErrorsOnFirstNameLastNameAndEmailFields() throws Exception {
+    @DisplayName("Checking that the 'Update User' form (user/update page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnUpdateUserFormViewWhenErrorsOnPasswordAndUsernameFields() throws Exception {
         String password = "pass";
         String username = " ";
 
@@ -198,8 +198,8 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
-    public void shouldReturnDeleteProfileFormView() throws Exception {
+    @DisplayName("Checking that the user is redirected to the user management page when its data are correctly deleted")
+    public void shouldReturnUserManagementPageViewWhenUserDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(userService).delete(1);
 
         this.mockMvc.perform(get("/user/delete/{id}", 1))

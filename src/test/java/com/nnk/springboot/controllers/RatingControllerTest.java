@@ -48,8 +48,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the credit page is returned when the logged in user makes a GET request to the /credits URL")
-    public void shouldReturnCreditView() throws Exception {
+    @DisplayName("Checking that the rating/list page is returned when the user makes a GET request to the /rating/list URL")
+    public void shouldReturnRatingListView() throws Exception {
         when(ratingService.findAllRatings()).thenReturn(ratings);
 
         this.mockMvc.perform(get("/rating/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -80,16 +80,16 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the contact page is returned when the logged in user makes a GET request to the /user/add URL")
-    public void shouldReturnUserAddPageView() throws Exception {
+    @DisplayName("Checking that the rating/add page is returned when the user makes a GET request to the /rating/add URL")
+    public void shouldReturnRatingAddPageView() throws Exception {
         this.mockMvc.perform(get("/rating/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("rating/add"));
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlySaved() throws Exception {
+    @DisplayName("Checking that the user is redirected to the rating/list page when new rating is correctly saved")
+    public void shouldReturnRatingListPageViewWhenNewRatingIsCorrectlySaved() throws Exception {
         when(ratingService.save(any(Rating.class))).thenReturn(rating);
 
         this.mockMvc.perform(post("/rating/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -110,8 +110,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the bankAccount form is returned when there are errors on iban or/and name")
-    public void shouldReturnBankAccountFormViewWhenErrorsOnIbanAndNameFields() throws Exception {
+    @DisplayName("Checking that the 'Add New Rating' form (rating/add page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnAddNewRatingFormViewWhenErrorsOnMoodysRatingAndOrderFields() throws Exception {
         String moodysRating = " ";
         Integer orderNumber = 0;
 
@@ -134,8 +134,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
-    public void shouldReturnUpdateProfileFormView() throws Exception {
+    @DisplayName("Checking that the 'Update Rating' form (rating/update page) is returned when the user makes a GET request to the /rating/update/{id} URL")
+    public void shouldReturnUpdateRatingFormView() throws Exception {
         when(ratingService.findById(1)).thenReturn(rating);
 
         this.mockMvc.perform(get("/rating/update/{id}", 1))
@@ -148,8 +148,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlyUpdated() throws Exception {
+    @DisplayName("Checking that the user is redirected to the rating/list page when rating's data are correctly updated")
+    public void shouldReturnRatingListPageViewWhenRatingDataAreCorrectlyUpdated() throws Exception {
         Integer orderNumber = 20;
         when(ratingService.update(anyInt(), any(Rating.class))).thenReturn(ratingUpdated);
 
@@ -171,8 +171,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned with error message when there are errors on first name, last name and/or user's email")
-    public void shouldReturnUpdateProfileFormViewWhenErrorsOnFirstNameLastNameAndEmailFields() throws Exception {
+    @DisplayName("Checking that the 'Update Rating' form (rating/update page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnUpdateRatingFormViewWhenErrorsOnOrderField() throws Exception {
         Integer orderNumber = null;
 
         this.mockMvc.perform(post("/rating/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -192,8 +192,8 @@ public class RatingControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
-    public void shouldReturnDeleteProfileFormView() throws Exception {
+    @DisplayName("Checking that the user is redirected to the rating/list page when rating's data are correctly deleted")
+    public void shouldReturnRatingListPageViewWhenRatingDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(ratingService).delete(1);
 
         this.mockMvc.perform(get("/rating/delete/{id}", 1))

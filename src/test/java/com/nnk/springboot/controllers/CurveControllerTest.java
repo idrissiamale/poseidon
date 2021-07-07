@@ -48,8 +48,8 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the credit page is returned when the logged in user makes a GET request to the /credits URL")
-    public void shouldReturnCreditView() throws Exception {
+    @DisplayName("Checking that the curvePoint/list page is returned when the user makes a GET request to the /curvePoint/list URL")
+    public void shouldReturnCurvePointListView() throws Exception {
         when(curvePointService.findAll()).thenReturn(curvePoints);
 
         this.mockMvc.perform(get("/curvePoint/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -78,16 +78,16 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the contact page is returned when the logged in user makes a GET request to the /user/add URL")
-    public void shouldReturnUserAddPageView() throws Exception {
+    @DisplayName("Checking that the curvePoint/add page is returned when the user makes a GET request to the /curvePoint/add URL")
+    public void shouldReturnCurvePointAddPageView() throws Exception {
         this.mockMvc.perform(get("/curvePoint/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/add"));
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlySaved() throws Exception {
+    @DisplayName("Checking that the user is redirected to the curvePoint/list page when curvePoint's data are correctly saved")
+    public void shouldReturnCurvePointListPageViewWhenCurvePointDataAreCorrectlySaved() throws Exception {
         Integer curveId = 10;
         when(curvePointService.save(any(CurvePoint.class))).thenReturn(curvePoint);
 
@@ -108,8 +108,8 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the bankAccount form is returned when there are errors on iban or/and name")
-    public void shouldReturnBankAccountFormViewWhenErrorsOnIbanAndNameFields() throws Exception {
+    @DisplayName("Checking that the 'Add New Curve Point' form (curvePoint/add page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnAddNewTradeFormViewWhenErrorsOnCurveIdAndTermFields() throws Exception {
         Integer curveId = 0;
         Double term = null;
 
@@ -131,7 +131,7 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
+    @DisplayName("Checking that the 'Update Curve Point' form (curvePoint/update page) is returned when the user makes a GET request to the /curvePoint/update/{id} URL")
     public void shouldReturnUpdateProfileFormView() throws Exception {
         when(curvePointService.findById(1)).thenReturn(curvePoint);
 
@@ -145,8 +145,8 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the user is redirected to the home page when its bank account is correctly saved")
-    public void shouldReturnHomePageViewWhenBankAccountDataAreCorrectlyUpdated() throws Exception {
+    @DisplayName("Checking that the user is redirected to the curvePoint/list page when curvePoint's data are correctly updated")
+    public void shouldReturnCurvePointListPageViewWhenCurvePointDataAreCorrectlyUpdated() throws Exception {
         Integer curveIdUpdated = 9;
         when(curvePointService.update(anyInt(), any(CurvePoint.class))).thenReturn(curvePointUpdated);
 
@@ -167,8 +167,8 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned with error message when there are errors on first name, last name and/or user's email")
-    public void shouldReturnUpdateProfileFormViewWhenErrorsOnFirstNameLastNameAndEmailFields() throws Exception {
+    @DisplayName("Checking that the 'Update Curve Point' form (curvePoint/update page) is returned with error message when there are errors on the form fields")
+    public void shouldReturnUpdateCurvePointFormViewWhenErrorsOnCurveIdField() throws Exception {
         Integer curveId = null;
 
         this.mockMvc.perform(post("/curvePoint/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -187,8 +187,8 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the update_profile form is returned when the logged in user makes a GET request to the /profile/edit URL")
-    public void shouldReturnDeleteProfileFormView() throws Exception {
+    @DisplayName("Checking that the user is redirected to the curvePoint/list page when curvePoint's data are correctly deleted")
+    public void shouldReturnCurvePointListPageViewWhenCurvePointDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(curvePointService).delete(1);
 
         this.mockMvc.perform(get("/curvePoint/delete/{id}", 1))

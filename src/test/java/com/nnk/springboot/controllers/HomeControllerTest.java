@@ -20,7 +20,7 @@ public class HomeControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the login page is returned when the user wants to log on the application")
+    @DisplayName("Checking that the home page is returned when the user makes a GET request to the '/' URL")
     public void shouldReturnHomePageView() throws Exception {
         this.mockMvc.perform(get("/").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
@@ -29,7 +29,7 @@ public class HomeControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the login page is returned when the user wants to log on the application")
+    @DisplayName("Checking that the user management page is returned when the user makes a GET request to the /admin/home URL")
     public void shouldReturnAdminHomePageView() throws Exception {
         this.mockMvc.perform(get("/admin/home").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isFound())

@@ -32,7 +32,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the login page is returned when the user wants to log on the application")
+    @DisplayName("Checking that the user management page is returned when the user makes a GET request to the /app/secure/article-details URL")
     public void shouldReturnUserManagementPageView() throws Exception {
         this.mockMvc.perform(get("/app/secure/article-details").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isFound())
@@ -42,7 +42,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the login page is returned when the user wants to log on the application")
+    @DisplayName("Checking that the access denied page is returned when the user wants to access a page he has not authorization for")
     public void shouldReturnErrorPageView() throws Exception {
         String errorMessage = "You are not authorized for the requested data.";
         this.mockMvc.perform(get("/app/error").contentType(MediaType.APPLICATION_FORM_URLENCODED))
