@@ -12,6 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * A configuration class which allows us to customize security for our web application by overriding WebSecurityConfigurerAdapter's methods.
+ *
+ * @see WebSecurityConfigurerAdapter
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

@@ -1,5 +1,6 @@
-package com.nnk.springboot.config;
+package com.nnk.springboot.validator;
 
+import com.nnk.springboot.validator.ValidPassword;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
