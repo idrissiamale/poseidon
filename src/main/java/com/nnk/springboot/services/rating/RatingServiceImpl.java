@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of the RatingService interface.
+ *
+ * @see RatingService
+ */
 @Service
 public class RatingServiceImpl implements RatingService {
     private static final Logger logger = LogManager.getLogger("RatingServiceImpl");
@@ -19,26 +24,38 @@ public class RatingServiceImpl implements RatingService {
         this.ratingRepository = ratingRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Rating findById(Integer id) throws IllegalArgumentException {
         logger.info("Rating was successfully fetched.");
         return ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Rating> findAllRatings() {
         logger.info("Ratings were successfully fetched.");
         return ratingRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Rating save(Rating rating) {
+    public Rating save(Rating rating) throws IllegalArgumentException {
         logger.info("Rating was saved successfully.");
         return ratingRepository.save(rating);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Rating update(Integer id, Rating rating) {
+    public Rating update(Integer id, Rating rating) throws IllegalArgumentException {
         return ratingRepository.findById(id).map(ratingToUpdate -> {
             ratingToUpdate.setMoodysRating(rating.getMoodysRating());
             ratingToUpdate.setSandPRating(rating.getSandPRating());
@@ -49,8 +66,11 @@ public class RatingServiceImpl implements RatingService {
         }).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws IllegalArgumentException {
         Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         logger.info("Rating was deleted successfully.");
         ratingRepository.delete(rating);

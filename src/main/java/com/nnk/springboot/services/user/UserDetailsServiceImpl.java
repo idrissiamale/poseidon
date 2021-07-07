@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Implementation of the UserDetailsService interface.
+ *
+ * @see UserDetailsService
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger("UserDetailsServiceImpl");
@@ -23,6 +28,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Locates the user based on the username.
+     *
+     * @param username - the username identifying the user whose data is required. Must not be null.
+     * @return the record of the user with the given username.
+     * @throws UsernameNotFoundException if the user could not be found or the user has no GrantedAuthority.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
