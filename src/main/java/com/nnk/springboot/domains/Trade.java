@@ -1,6 +1,5 @@
 package com.nnk.springboot.domains;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,12 +19,11 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "trade")
 public class Trade implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tradeId;
 
     @NotBlank(message = "Account is mandatory")
@@ -39,7 +37,7 @@ public class Trade implements Serializable {
     private String type;
 
     @NotNull(message = "Buy quantity is mandatory")
-    @Digits(message="Buy quantity should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
+    @Digits(message = "Buy quantity should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
     private Double buyQuantity;
 
     private Double sellQuantity;
