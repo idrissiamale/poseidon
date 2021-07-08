@@ -40,7 +40,7 @@ public class BidList implements Serializable {
     private String type;
 
     @NotNull(message = "Bid quantity is mandatory")
-    @Digits(message="Bid quantity should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message="Bid quantity should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
     private Double bidQuantity;
 
     private Double askQuantity;

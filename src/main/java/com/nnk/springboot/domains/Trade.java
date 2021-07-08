@@ -39,7 +39,7 @@ public class Trade implements Serializable {
     private String type;
 
     @NotNull(message = "Buy quantity is mandatory")
-    @Digits(message="Buy quantity should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message="Buy quantity should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
     private Double buyQuantity;
 
     private Double sellQuantity;

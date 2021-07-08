@@ -205,6 +205,7 @@ public class UserControllerTest {
         this.mockMvc.perform(get("/user/delete/{id}", 1))
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/user/list"))
+                .andExpect(redirectedUrl("/user/list"))
                 .andExpect(model().attribute("user", nullValue()))
                 .andDo(print());
 

@@ -36,7 +36,7 @@ public class BidListController {
      * @param model - it permits to add "bids" to the model and to display all the bids registered in Poseidon.
      * @return the bidList/list page.
      */
-    @GetMapping("/bidList/list")
+    @GetMapping("/bidlist/list")
     public String home(Model model) {
         model.addAttribute("bids", bidListService.findAll());
         return "bidList/list";
@@ -48,7 +48,7 @@ public class BidListController {
      * @param bidList - BidList entity. Must not be null.
      * @return the bidList/add page.
      */
-    @GetMapping("/bidList/add")
+    @GetMapping("/bidlist/add")
     public String addBidForm(BidList bidList) {
         return "bidList/add";
     }
@@ -62,13 +62,13 @@ public class BidListController {
      *               when the user is redirected to bidList/list page.
      * @return it redirects the user to the bidList/list page if the submission is completed and without errors. Otherwise the bidList/add form is returned.
      */
-    @PostMapping("/bidList/validate")
+    @PostMapping("/bidlist/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             logger.info("BidList was saved successfully.");
             bidListService.save(bid);
             model.addAttribute("bids", bidListService.findAll());
-            return "redirect:/bidList/list";
+            return "redirect:/bidlist/list";
         }
         return "bidList/add";
     }
@@ -80,7 +80,7 @@ public class BidListController {
      * @param model - it permits to define BidList entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the bidList/update page.
      */
-    @GetMapping("/bidList/update/{id}")
+    @GetMapping("/bidlist/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("BidList was successfully fetched.");
         BidList bid = bidListService.findById(id);
@@ -97,7 +97,7 @@ public class BidListController {
      * @param model  - it permits to add "bids" to the model and to display all the bids registered in Poseidon when the user is redirected to bidList/list page.
      * @return it redirects the user to the bidList/list page if the submission is completed and without errors. Otherwise the bidList/update form is returned.
      */
-    @PostMapping("/bidList/update/{id}")
+    @PostMapping("/bidlist/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bid, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "bidList/update";
@@ -105,7 +105,7 @@ public class BidListController {
         logger.info("BidList was updated successfully.");
         bidListService.update(id, bid);
         model.addAttribute("bids", bidListService.findAll());
-        return "redirect:/bidList/list";
+        return "redirect:/bidlist/list";
     }
 
     /**
@@ -116,11 +116,11 @@ public class BidListController {
      *              when the user is redirected to bidList/list page after the delete operation.
      * @return it redirects the user to the bidList/list page after the delete operation.
      */
-    @GetMapping("/bidList/delete/{id}")
+    @GetMapping("/bidlist/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         logger.info("BidList was deleted successfully.");
         bidListService.delete(id);
         model.addAttribute("bids", bidListService.findAll());
-        return "redirect:/bidList/list";
+        return "redirect:/bidlist/list";
     }
 }

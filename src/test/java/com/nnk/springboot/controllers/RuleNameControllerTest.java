@@ -49,11 +49,11 @@ public class RuleNameControllerTest {
 
 
     @Test
-    @DisplayName("Checking that the ruleName/list page is returned when the user makes a GET request to the /ruleName/list URL")
+    @DisplayName("Checking that the ruleName/list page is returned when the user makes a GET request to the /rulename/list URL")
     public void shouldReturnRuleNameListView() throws Exception {
         when(ruleNameService.findAll()).thenReturn(rules);
 
-        this.mockMvc.perform(get("/ruleName/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/rulename/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/list"))
                 .andExpect(model().attribute("rules", rules))
@@ -83,9 +83,9 @@ public class RuleNameControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the ruleName/add page is returned when the user makes a GET request to the /ruleName/add URL")
+    @DisplayName("Checking that the ruleName/add page is returned when the user makes a GET request to the /rulename/add URL")
     public void shouldReturnRuleNameAddPageView() throws Exception {
-        this.mockMvc.perform(get("/ruleName/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/rulename/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/add"));
     }
@@ -95,7 +95,7 @@ public class RuleNameControllerTest {
     public void shouldReturnRuleNameListPageViewWhenRuleNameDataAreCorrectlySaved() throws Exception {
         when(ruleNameService.save(any(RuleName.class))).thenReturn(ruleName);
 
-        this.mockMvc.perform(post("/ruleName/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/rulename/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", "Rule Name")
                 .param("description", "Description")
                 .param("json", "Json")
@@ -105,8 +105,8 @@ public class RuleNameControllerTest {
                 .sessionAttr("ruleName", ruleName)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/ruleName/list"))
-                .andExpect(redirectedUrl("/ruleName/list"))
+                .andExpect(view().name("redirect:/rulename/list"))
+                .andExpect(redirectedUrl("/rulename/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -119,7 +119,7 @@ public class RuleNameControllerTest {
     public void shouldReturnAddNewRuleFormViewWhenErrorsOnNameField() throws Exception {
         String name = " ";
 
-        this.mockMvc.perform(post("/ruleName/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/rulename/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", name)
                 .param("description", "Description")
                 .param("json", "Json")
@@ -138,11 +138,11 @@ public class RuleNameControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the 'Update Rule' form (ruleName/update page) is returned when the user makes a GET request to the /ruleName/update/{id} URL")
+    @DisplayName("Checking that the 'Update Rule' form (ruleName/update page) is returned when the user makes a GET request to the /rulename/update/{id} URL")
     public void shouldReturnUpdateRuleFormView() throws Exception {
         when(ruleNameService.findById(1)).thenReturn(ruleName);
 
-        this.mockMvc.perform(get("/ruleName/update/{id}", 1))
+        this.mockMvc.perform(get("/rulename/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ruleName/update"))
                 .andExpect(model().attribute("ruleName", ruleName))
@@ -156,7 +156,7 @@ public class RuleNameControllerTest {
     public void shouldReturnRuleNameListPageViewWhenRuleNameDataAreCorrectlyUpdated() throws Exception {
         when(ruleNameService.update(anyInt(), any(RuleName.class))).thenReturn(ruleNameUpdated);
 
-        this.mockMvc.perform(post("/ruleName/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/rulename/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", ruleNameUpdated.getName())
                 .param("description", "Description")
                 .param("json", "Json")
@@ -166,8 +166,8 @@ public class RuleNameControllerTest {
                 .sessionAttr("ruleName", ruleNameUpdated)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/ruleName/list"))
-                .andExpect(redirectedUrl("/ruleName/list"))
+                .andExpect(view().name("redirect:/rulename/list"))
+                .andExpect(redirectedUrl("/rulename/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -180,7 +180,7 @@ public class RuleNameControllerTest {
     public void shouldReturnUpdateRuleFormViewWhenErrorsOnNameField() throws Exception {
         String name = " ";
 
-        this.mockMvc.perform(post("/ruleName/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/rulename/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("name", name)
                 .param("description", "Description")
                 .param("json", "Json")
@@ -203,9 +203,10 @@ public class RuleNameControllerTest {
     public void shouldReturnRuleNameListPageViewWhenRuleNameDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(ruleNameService).delete(1);
 
-        this.mockMvc.perform(get("/ruleName/delete/{id}", 1))
+        this.mockMvc.perform(get("/rulename/delete/{id}", 1))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/ruleName/list"))
+                .andExpect(view().name("redirect:/rulename/list"))
+                .andExpect(redirectedUrl("/rulename/list"))
                 .andExpect(model().attribute("ruleName", nullValue()))
                 .andDo(print());
 

@@ -35,11 +35,11 @@ public class CurvePoint implements Serializable {
     private Timestamp asOfDate;
 
     @NotNull(message = "Term is mandatory")
-    @Digits(message = "Term should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message = "Term should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
     private Double term;
 
     @NotNull(message = "Value is mandatory")
-    @Digits(message = "Value should have maximum 5 digits and three decimals", integer = 5, fraction = 3)
+    @Digits(message = "Value should have maximum 5 digits and two decimals", integer = 5, fraction = 2)
     private Double value;
 
     @CreationTimestamp

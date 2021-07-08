@@ -1,10 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domains.BidList;
-import com.nnk.springboot.domains.User;
 import com.nnk.springboot.services.bidList.BidListService;
-import com.nnk.springboot.services.bidList.BidListServiceImpl;
-import com.nnk.springboot.services.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,11 +48,11 @@ public class BidListControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the bidList/list page is returned when the user makes a GET request to the /bidList/list URL")
+    @DisplayName("Checking that the bidList/list page is returned when the user makes a GET request to the /bidlist/list URL")
     public void shouldReturnBidListView() throws Exception {
         when(bidListService.findAll()).thenReturn(bids);
 
-        this.mockMvc.perform(get("/bidList/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/bidlist/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/list"))
                 .andExpect(model().attribute("bids", bids))
@@ -81,9 +78,9 @@ public class BidListControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the bidList/add page is returned when the user makes a GET request to the /bidList/add URL")
+    @DisplayName("Checking that the bidList/add page is returned when the user makes a GET request to the /bidlist/add URL")
     public void shouldReturnBidListAddPageView() throws Exception {
-        this.mockMvc.perform(get("/bidList/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/bidlist/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/add"));
     }
@@ -93,15 +90,15 @@ public class BidListControllerTest {
     public void shouldReturnBidListPageViewWhenBidDataAreCorrectlySaved() throws Exception {
         when(bidListService.save(any(BidList.class))).thenReturn(bidList);
 
-        this.mockMvc.perform(post("/bidList/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/bidlist/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("account", "account name")
                 .param("type", "type name")
                 .param("bidQuantity", String.valueOf(55.75))
                 .sessionAttr("bidList", bidList)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/bidList/list"))
-                .andExpect(redirectedUrl("/bidList/list"))
+                .andExpect(view().name("redirect:/bidlist/list"))
+                .andExpect(redirectedUrl("/bidlist/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -115,7 +112,7 @@ public class BidListControllerTest {
         String account = " ";
         Double bidQuantity = null;
 
-        this.mockMvc.perform(post("/bidList/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/bidlist/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("account", account)
                 .param("type", "type name")
                 .param("bidQuantity", String.valueOf(bidQuantity))
@@ -133,11 +130,11 @@ public class BidListControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the 'Update Bid' form (bidList/update page) is returned when the user makes a GET request to the /bidList/update/{id} URL")
+    @DisplayName("Checking that the 'Update Bid' form (bidList/update page) is returned when the user makes a GET request to the /bidlist/update/{id} URL")
     public void shouldReturnUpdateBidFormView() throws Exception {
         when(bidListService.findById(1)).thenReturn(bidList);
 
-        this.mockMvc.perform(get("/bidList/update/{id}", 1))
+        this.mockMvc.perform(get("/bidlist/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bidList/update"))
                 .andExpect(model().attribute("bidList", bidList))
@@ -151,15 +148,15 @@ public class BidListControllerTest {
     public void shouldReturnBidListPageViewWhenBidDataAreCorrectlyUpdated() throws Exception {
         when(bidListService.update(anyInt(), any(BidList.class))).thenReturn(bidListUpdated);
 
-        this.mockMvc.perform(post("/bidList/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/bidlist/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("account", "account")
                 .param("type", "type name")
                 .param("bidQuantity", String.valueOf(55.75))
                 .sessionAttr("bidList", bidListUpdated)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/bidList/list"))
-                .andExpect(redirectedUrl("/bidList/list"))
+                .andExpect(view().name("redirect:/bidlist/list"))
+                .andExpect(redirectedUrl("/bidlist/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -172,7 +169,7 @@ public class BidListControllerTest {
     public void shouldReturnUpdateBidFormViewWhenErrorsOnAccountField() throws Exception {
         String account = "the name of this account is really really long";
 
-        this.mockMvc.perform(post("/bidList/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/bidlist/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("account", account)
                 .param("type", "type name")
                 .param("bidQuantity", String.valueOf(55.75))
@@ -192,9 +189,10 @@ public class BidListControllerTest {
     public void shouldReturnBidListPageViewWhenBidDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(bidListService).delete(1);
 
-        this.mockMvc.perform(get("/bidList/delete/{id}", 1))
+        this.mockMvc.perform(get("/bidlist/delete/{id}", 1))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/bidList/list"))
+                .andExpect(view().name("redirect:/bidlist/list"))
+                .andExpect(redirectedUrl("/bidlist/list"))
                 .andExpect(model().attribute("bidList", nullValue()))
                 .andDo(print());
 

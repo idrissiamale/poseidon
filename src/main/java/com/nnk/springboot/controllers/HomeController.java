@@ -26,6 +26,6 @@ public class HomeController {
      */
     @GetMapping("/admin/home")
     public String adminHome() {
-        return "redirect:/bidList/list";
+        return "redirect:/bidlist/list";
     }
 }

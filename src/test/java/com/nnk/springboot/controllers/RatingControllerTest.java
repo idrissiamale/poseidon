@@ -199,6 +199,7 @@ public class RatingControllerTest {
         this.mockMvc.perform(get("/rating/delete/{id}", 1))
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/rating/list"))
+                .andExpect(redirectedUrl("/rating/list"))
                 .andExpect(model().attribute("rating", nullValue()))
                 .andDo(print());
 

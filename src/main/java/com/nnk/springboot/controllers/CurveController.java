@@ -36,7 +36,7 @@ public class CurveController {
      * @param model - it permits to add "curvePoints" to the model and to display all the curve points registered in Poseidon.
      * @return the curvePoint/list page.
      */
-    @GetMapping("/curvePoint/list")
+    @GetMapping("/curvepoint/list")
     public String home(Model model) {
         model.addAttribute("curvePoints", curvePointService.findAll());
         return "curvePoint/list";
@@ -48,7 +48,7 @@ public class CurveController {
      * @param curvePoint - CurvePoint entity. Must not be null.
      * @return the curvePoint/add page.
      */
-    @GetMapping("/curvePoint/add")
+    @GetMapping("/curvepoint/add")
     public String addCurvePointForm(CurvePoint curvePoint) {
         return "curvePoint/add";
     }
@@ -62,13 +62,13 @@ public class CurveController {
      *                   when the user is redirected to curvePoint/list page.
      * @return it redirects the user to the curvePoint/list page if the submission is completed and without errors. Otherwise the curvePoint/add form is returned.
      */
-    @PostMapping("/curvePoint/validate")
+    @PostMapping("/curvepoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             logger.info("CurvePoint was saved successfully.");
             curvePointService.save(curvePoint);
             model.addAttribute("curvePoints", curvePointService.findAll());
-            return "redirect:/curvePoint/list";
+            return "redirect:/curvepoint/list";
         }
         return "curvePoint/add";
     }
@@ -80,7 +80,7 @@ public class CurveController {
      * @param model - it permits to define CurvePoint entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the curvePoint/update page.
      */
-    @GetMapping("/curvePoint/update/{id}")
+    @GetMapping("/curvepoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("CurvePoint was successfully fetched.");
         CurvePoint curvePoint = curvePointService.findById(id);
@@ -97,7 +97,7 @@ public class CurveController {
      * @param model      - it permits to add "curvePoints" to the model and to display all the curve points registered in Poseidon when the user is redirected to curvePoint/list page.
      * @return it redirects the user to the curvePoint/list page if the submission is completed and without errors. Otherwise the curvePoint/update form is returned.
      */
-    @PostMapping("/curvePoint/update/{id}")
+    @PostMapping("/curvepoint/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "curvePoint/update";
@@ -105,7 +105,7 @@ public class CurveController {
         logger.info("CurvePoint was updated successfully.");
         curvePointService.update(id, curvePoint);
         model.addAttribute("curvePoints", curvePointService.findAll());
-        return "redirect:/curvePoint/list";
+        return "redirect:/curvepoint/list";
     }
 
     /**
@@ -116,11 +116,11 @@ public class CurveController {
      *              when the user is redirected to curvePoint/list page after the delete operation.
      * @return it redirects the user to the curvePoint/list page after the delete operation.
      */
-    @GetMapping("/curvePoint/delete/{id}")
+    @GetMapping("/curvepoint/delete/{id}")
     public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
         logger.info("CurvePoint was deleted successfully.");
         curvePointService.delete(id);
         model.addAttribute("curvePoints", curvePointService.findAll());
-        return "redirect:/curvePoint/list";
+        return "redirect:/curvepoint/list";
     }
 }

@@ -48,11 +48,11 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the curvePoint/list page is returned when the user makes a GET request to the /curvePoint/list URL")
+    @DisplayName("Checking that the curvePoint/list page is returned when the user makes a GET request to the /curvepoint/list URL")
     public void shouldReturnCurvePointListView() throws Exception {
         when(curvePointService.findAll()).thenReturn(curvePoints);
 
-        this.mockMvc.perform(get("/curvePoint/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/curvepoint/list").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/list"))
                 .andExpect(model().attribute("curvePoints", curvePoints))
@@ -78,9 +78,9 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the curvePoint/add page is returned when the user makes a GET request to the /curvePoint/add URL")
+    @DisplayName("Checking that the curvePoint/add page is returned when the user makes a GET request to the /curvepoint/add URL")
     public void shouldReturnCurvePointAddPageView() throws Exception {
-        this.mockMvc.perform(get("/curvePoint/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        this.mockMvc.perform(get("/curvepoint/add").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/add"));
     }
@@ -91,15 +91,15 @@ public class CurveControllerTest {
         Integer curveId = 10;
         when(curvePointService.save(any(CurvePoint.class))).thenReturn(curvePoint);
 
-        this.mockMvc.perform(post("/curvePoint/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/curvepoint/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("curveId", String.valueOf(10))
                 .param("term", String.valueOf(15.7))
                 .param("value", String.valueOf(25.0))
                 .sessionAttr("curvePoint", curvePoint)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/curvePoint/list"))
-                .andExpect(redirectedUrl("/curvePoint/list"))
+                .andExpect(view().name("redirect:/curvepoint/list"))
+                .andExpect(redirectedUrl("/curvepoint/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -113,7 +113,7 @@ public class CurveControllerTest {
         Integer curveId = 0;
         Double term = null;
 
-        this.mockMvc.perform(post("/curvePoint/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/curvepoint/validate").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("curveId", String.valueOf(curveId))
                 .param("term", String.valueOf(term))
                 .param("value", String.valueOf(25.0))
@@ -131,11 +131,11 @@ public class CurveControllerTest {
     }
 
     @Test
-    @DisplayName("Checking that the 'Update Curve Point' form (curvePoint/update page) is returned when the user makes a GET request to the /curvePoint/update/{id} URL")
+    @DisplayName("Checking that the 'Update Curve Point' form (curvePoint/update page) is returned when the user makes a GET request to the /curvepoint/update/{id} URL")
     public void shouldReturnUpdateProfileFormView() throws Exception {
         when(curvePointService.findById(1)).thenReturn(curvePoint);
 
-        this.mockMvc.perform(get("/curvePoint/update/{id}", 1))
+        this.mockMvc.perform(get("/curvepoint/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("curvePoint/update"))
                 .andExpect(model().attribute("curvePoint", curvePoint))
@@ -150,15 +150,15 @@ public class CurveControllerTest {
         Integer curveIdUpdated = 9;
         when(curvePointService.update(anyInt(), any(CurvePoint.class))).thenReturn(curvePointUpdated);
 
-        this.mockMvc.perform(post("/curvePoint/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/curvepoint/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("curveId", String.valueOf(9))
                 .param("term", String.valueOf(15.7))
                 .param("value", String.valueOf(25.0))
                 .sessionAttr("curvePoint", curvePointUpdated)
         )
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/curvePoint/list"))
-                .andExpect(redirectedUrl("/curvePoint/list"))
+                .andExpect(view().name("redirect:/curvepoint/list"))
+                .andExpect(redirectedUrl("/curvepoint/list"))
                 .andExpect(model().hasNoErrors())
                 .andDo(print());
 
@@ -171,7 +171,7 @@ public class CurveControllerTest {
     public void shouldReturnUpdateCurvePointFormViewWhenErrorsOnCurveIdField() throws Exception {
         Integer curveId = null;
 
-        this.mockMvc.perform(post("/curvePoint/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        this.mockMvc.perform(post("/curvepoint/update/{id}", 1).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("curveId", String.valueOf(curveId))
                 .param("term", String.valueOf(15.7))
                 .param("value", String.valueOf(25.0))
@@ -191,9 +191,10 @@ public class CurveControllerTest {
     public void shouldReturnCurvePointListPageViewWhenCurvePointDataAreCorrectlyDeleted() throws Exception {
         doNothing().when(curvePointService).delete(1);
 
-        this.mockMvc.perform(get("/curvePoint/delete/{id}", 1))
+        this.mockMvc.perform(get("/curvepoint/delete/{id}", 1))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/curvePoint/list"))
+                .andExpect(view().name("redirect:/curvepoint/list"))
+                .andExpect(redirectedUrl("/curvepoint/list"))
                 .andExpect(model().attribute("curvePoint", nullValue()))
                 .andDo(print());
 

@@ -192,6 +192,7 @@ public class TradeControllerTest {
         this.mockMvc.perform(get("/trade/delete/{id}", 1))
                 .andExpect(status().isFound())
                 .andExpect(view().name("redirect:/trade/list"))
+                .andExpect(redirectedUrl("/trade/list"))
                 .andExpect(model().attribute("trade", nullValue()))
                 .andDo(print());
 

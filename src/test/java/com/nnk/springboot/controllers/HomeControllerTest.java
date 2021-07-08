@@ -33,8 +33,8 @@ public class HomeControllerTest {
     public void shouldReturnAdminHomePageView() throws Exception {
         this.mockMvc.perform(get("/admin/home").contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/bidList/list"))
-                .andExpect(redirectedUrl("/bidList/list"))
+                .andExpect(view().name("redirect:/bidlist/list"))
+                .andExpect(redirectedUrl("/bidlist/list"))
                 .andDo(print());
     }
 }
