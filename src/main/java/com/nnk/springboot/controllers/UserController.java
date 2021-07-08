@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * @see com.nnk.springboot.services.user.UserService
  */
 @Controller
+@RequestMapping("/user")
 public class UserController {
     private static final Logger logger = LogManager.getLogger("UserController");
     private UserService userService;
@@ -36,7 +37,7 @@ public class UserController {
      * @param model - it permits to add "users" to the model and to display all the users registered in Poseidon.
      * @return the user/list page.
      */
-    @GetMapping("/user/list")
+    @GetMapping("/list")
     public String home(Model model) {
         model.addAttribute("users", userService.findAllUsers());
         return "user/list";
@@ -48,7 +49,7 @@ public class UserController {
      * @param user - User entity. Must not be null.
      * @return the user/add page.
      */
-    @GetMapping("/user/add")
+    @GetMapping("/add")
     public String addUser(User user) {
         return "user/add";
     }
@@ -61,7 +62,7 @@ public class UserController {
      * @param model  - it permits to add "error" to the model and to display IllegalArgumentException's error message if the exception is thrown.
      * @return it redirects the user to the user/list page if the submission is completed and without errors. Otherwise the user/add form is returned.
      */
-    @PostMapping("/user/validate")
+    @PostMapping("/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/add";
@@ -85,7 +86,7 @@ public class UserController {
      * @param model - it permits to define User entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the user/update page.
      */
-    @GetMapping("/user/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("User was successfully fetched.");
         User user = userService.findById(id);
@@ -103,7 +104,7 @@ public class UserController {
      * @param model  - it permits to add "users" to the model and to display all the users registered in Poseidon when the user is redirected to user/list page.
      * @return it redirects the user to the user/list page if the submission is completed and without errors. Otherwise the user/update form is returned.
      */
-    @PostMapping("/user/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";
@@ -122,7 +123,7 @@ public class UserController {
      *              when the user is redirected to user/list page after the delete operation.
      * @return it redirects the user to the user/list page after the delete operation.
      */
-    @GetMapping("/user/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         logger.info("User was deleted successfully.");
         userService.delete(id);

@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * @see com.nnk.springboot.services.trade.TradeService
  */
 @Controller
+@RequestMapping("/trade")
 public class TradeController {
     private static final Logger logger = LogManager.getLogger("TradeController");
     private TradeService tradeService;
@@ -36,7 +37,7 @@ public class TradeController {
      * @param model - it permits to add "tradeList" to the model and to display all the trades registered in Poseidon.
      * @return the trade/list page.
      */
-    @GetMapping("/trade/list")
+    @GetMapping("/list")
     public String home(Model model) {
         model.addAttribute("tradeList", tradeService.findAll());
         return "trade/list";
@@ -48,7 +49,7 @@ public class TradeController {
      * @param trade - Trade entity. Must not be null.
      * @return the trade/add page.
      */
-    @GetMapping("/trade/add")
+    @GetMapping("/add")
     public String addTradeForm(Trade trade) {
         return "trade/add";
     }
@@ -62,7 +63,7 @@ public class TradeController {
      *               when the user is redirected to trade/list page.
      * @return it redirects the user to the trade/list page if the submission is completed and without errors. Otherwise the trade/add form is returned.
      */
-    @PostMapping("/trade/validate")
+    @PostMapping("/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             logger.info("Trade was saved successfully.");
@@ -80,7 +81,7 @@ public class TradeController {
      * @param model - it permits to define Trade entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the trade/update page.
      */
-    @GetMapping("/trade/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("Trade was successfully fetched.");
         Trade trade = tradeService.findById(id);
@@ -97,7 +98,7 @@ public class TradeController {
      * @param model  - it permits to add "tradeList" to the model and to display all the trades registered in Poseidon when the user is redirected to trade/list page.
      * @return it redirects the user to the trade/list page if the submission is completed and without errors. Otherwise the trade/update form is returned.
      */
-    @PostMapping("/trade/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "trade/update";
@@ -116,7 +117,7 @@ public class TradeController {
      *              when the user is redirected to trade/list page after the delete operation.
      * @return it redirects the user to the trade/list page after the delete operation.
      */
-    @GetMapping("/trade/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
         logger.info("Trade data were deleted successfully.");
         tradeService.delete(id);

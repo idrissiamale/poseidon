@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * @see com.nnk.springboot.services.ruleName.RuleNameService
  */
 @Controller
+@RequestMapping("/rulename")
 public class RuleNameController {
     private static final Logger logger = LogManager.getLogger("RuleNameController");
     private RuleNameService ruleNameService;
@@ -36,7 +37,7 @@ public class RuleNameController {
      * @param model - it permits to add "rules" to the model and to display all the rules registered in Poseidon.
      * @return the ruleName/list page.
      */
-    @GetMapping("/rulename/list")
+    @GetMapping("/list")
     public String home(Model model) {
         model.addAttribute("rules", ruleNameService.findAll());
         return "ruleName/list";
@@ -48,7 +49,7 @@ public class RuleNameController {
      * @param ruleName - RuleName entity. Must not be null.
      * @return the ruleName/add page.
      */
-    @GetMapping("/rulename/add")
+    @GetMapping("/add")
     public String addRuleForm(RuleName ruleName) {
         return "ruleName/add";
     }
@@ -62,7 +63,7 @@ public class RuleNameController {
      *                 when the user is redirected to ruleName/list page.
      * @return it redirects the user to the ruleName/list page if the submission is completed and without errors. Otherwise the ruleName/add form is returned.
      */
-    @PostMapping("/rulename/validate")
+    @PostMapping("/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             logger.info("RuleName was saved successfully.");
@@ -80,7 +81,7 @@ public class RuleNameController {
      * @param model - it permits to define RuleName entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the ruleName/update page.
      */
-    @GetMapping("/rulename/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("RuleName was successfully fetched.");
         RuleName ruleName = ruleNameService.findById(id);
@@ -97,7 +98,7 @@ public class RuleNameController {
      * @param model    - it permits to add "rules" to the model and to display all the rules registered in Poseidon when the user is redirected to ruleName/list page.
      * @return it redirects the user to the ruleName/list page if the submission is completed and without errors. Otherwise the ruleName/update form is returned.
      */
-    @PostMapping("/rulename/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "ruleName/update";
@@ -116,7 +117,7 @@ public class RuleNameController {
      *              when the user is redirected to ruleName/list page after the delete operation.
      * @return it redirects the user to the ruleName/list page after the delete operation.
      */
-    @GetMapping("/rulename/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
         logger.info("RuleName was deleted successfully.");
         ruleNameService.delete(id);

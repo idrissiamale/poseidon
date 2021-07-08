@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * @see com.nnk.springboot.services.rating.RatingService
  */
 @Controller
+@RequestMapping("/rating")
 public class RatingController {
     private static final Logger logger = LogManager.getLogger("RatingController");
     private RatingService ratingService;
@@ -36,7 +37,7 @@ public class RatingController {
      * @param model - it permits to add "ratings" to the model and to display all the ratings registered in Poseidon.
      * @return the trade/list page.
      */
-    @GetMapping("/rating/list")
+    @GetMapping("/list")
     public String home(Model model) {
         model.addAttribute("ratings", ratingService.findAllRatings());
         return "rating/list";
@@ -48,7 +49,7 @@ public class RatingController {
      * @param rating - Rating entity. Must not be null.
      * @return the rating/add page.
      */
-    @GetMapping("/rating/add")
+    @GetMapping("/add")
     public String addRatingForm(Rating rating) {
         return "rating/add";
     }
@@ -62,7 +63,7 @@ public class RatingController {
      *               when the user is redirected to rating/list page.
      * @return it redirects the user to the rating/list page if the submission is completed and without errors. Otherwise the rating/add form is returned.
      */
-    @PostMapping("/rating/validate")
+    @PostMapping("/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             logger.info("Rating was saved successfully.");
@@ -80,7 +81,7 @@ public class RatingController {
      * @param model - it permits to define Rating entity as part of a Model and to display its data into form with the addAttribute method.
      * @return the rating/update page.
      */
-    @GetMapping("/rating/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         logger.info("Rating was successfully fetched.");
         Rating rating = ratingService.findById(id);
@@ -97,7 +98,7 @@ public class RatingController {
      * @param model  - it permits to add "ratings" to the model and to display all the ratings registered in Poseidon when the user is redirected to rating/list page.
      * @return it redirects the user to the rating/list page if the submission is completed and without errors. Otherwise the rating/update form is returned.
      */
-    @PostMapping("/rating/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "rating/update";
@@ -116,7 +117,7 @@ public class RatingController {
      *              when the user is redirected to rating/list page after the delete operation.
      * @return it redirects the user to the rating/list page after the delete operation.
      */
-    @GetMapping("/rating/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         logger.info("Rating was deleted successfully.");
         ratingService.delete(id);
