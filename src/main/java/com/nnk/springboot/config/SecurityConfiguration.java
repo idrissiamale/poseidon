@@ -45,11 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/admin/**",
-                        "/bidList/**",
-                        "/curvePoint/**",
+                        "/bidlist/**",
+                        "/curvepoint/**",
                         "/rating/**",
                         "/trade/**",
-                        "/ruleName/**",
+                        "/rulename/**",
                         "/user/add",
                         "/user/update/**",
                         "/user/delete/**" ).hasAuthority("ADMIN")
