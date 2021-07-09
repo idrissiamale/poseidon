@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.curvePoint;
 
-import com.nnk.springboot.domains.CurvePoint;
+import com.nnk.springboot.domain.CurvePoint;
 
 import java.util.List;
 

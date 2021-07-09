@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.user;
 
-import com.nnk.springboot.domains.User;
+import com.nnk.springboot.domain.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;

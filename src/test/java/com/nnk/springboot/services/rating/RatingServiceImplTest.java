@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.rating;
 
-import com.nnk.springboot.domains.Rating;
+import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

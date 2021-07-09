@@ -1,8 +1,6 @@
 package com.nnk.springboot.services.rating;
 
-import com.nnk.springboot.domains.Rating;
-import com.nnk.springboot.domains.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.nnk.springboot.domain.Rating;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.nnk.springboot.domains;
+package com.nnk.springboot.domain;
 
 import com.nnk.springboot.validator.ValidPassword;
 import lombok.AllArgsConstructor;

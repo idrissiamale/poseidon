@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.Trade;
+import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.services.trade.TradeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

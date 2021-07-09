@@ -1,7 +1,7 @@
 package com.nnk.springboot.services.user;
 
-import com.nnk.springboot.domains.MyUserDetails;
-import com.nnk.springboot.domains.User;
+import com.nnk.springboot.domain.MyUserDetails;
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.bidList;
 
-import com.nnk.springboot.domains.BidList;
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

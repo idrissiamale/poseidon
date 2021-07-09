@@ -1,4 +1,4 @@
-package com.nnk.springboot.domains;
+package com.nnk.springboot.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +23,7 @@ public class MyUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
-        return Arrays.asList(authority);
+        return Collections.singletonList(authority);
     }
 
     @Override

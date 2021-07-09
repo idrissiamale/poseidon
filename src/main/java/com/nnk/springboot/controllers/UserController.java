@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.User;
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.user.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

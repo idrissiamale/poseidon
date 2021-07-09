@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.RuleName;
+import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.services.ruleName.RuleNameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

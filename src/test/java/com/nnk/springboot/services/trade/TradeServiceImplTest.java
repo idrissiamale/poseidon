@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.trade;
 
-import com.nnk.springboot.domains.Trade;
+import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

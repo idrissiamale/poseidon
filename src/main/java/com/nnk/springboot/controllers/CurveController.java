@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.CurvePoint;
+import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.services.curvePoint.CurvePointService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

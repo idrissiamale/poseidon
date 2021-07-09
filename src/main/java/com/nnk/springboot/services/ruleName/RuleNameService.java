@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.ruleName;
 
-import com.nnk.springboot.domains.RuleName;
+import com.nnk.springboot.domain.RuleName;
 
 import java.util.List;
 

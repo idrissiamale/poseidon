@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.ruleName;
 
-import com.nnk.springboot.domains.RuleName;
+import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

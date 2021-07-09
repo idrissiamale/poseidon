@@ -1,6 +1,6 @@
 package com.nnk.springboot.services.bidList;
 
-import com.nnk.springboot.domains.BidList;
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

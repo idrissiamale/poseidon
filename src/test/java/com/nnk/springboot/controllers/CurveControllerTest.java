@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domains.CurvePoint;
+import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.services.curvePoint.CurvePointService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
